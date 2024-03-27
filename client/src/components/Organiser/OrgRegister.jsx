@@ -17,11 +17,10 @@ const OrgRegister = () => {
         email,
         password,
         state,
-        admin: true,
       });
       if (res && res.data.success) {
         toast.success(res.data.message);
-        navigate("/login");
+        navigate("/org-login");
       } else {
         toast.error(res.data.message);
       }
@@ -140,8 +139,11 @@ const OrgRegister = () => {
             </div>
 
             <div className="w-full flex flex-col my-4">
-              <button className="w-full text-white my-2 font-semibold bg-[#060606] rounded-md p-4 text-center flex items-center justify-center">
-                Log in
+              <button
+                type="submit"
+                className="w-full text-white my-2 font-semibold bg-[#060606] rounded-md p-4 text-center flex items-center justify-center"
+              >
+                Register
               </button>
 
               <div className="w-full flex items-center justify-center">
