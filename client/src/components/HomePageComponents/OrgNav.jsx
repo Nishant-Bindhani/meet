@@ -5,7 +5,7 @@ import axios from "axios";
 import slugify from "slugify"; // Import slugify for creating slugs
 import "./Nav.css";
 
-const Nav = () => {
+const OrgNav = () => {
   const [address, setAddress] = useState(null);
   const [error, setError] = useState(null);
   const [title, setTitle] = useState("");
@@ -152,7 +152,7 @@ const Nav = () => {
                       Dashboard
                     </li>
                   </Link>
-                  <Link to="/admin/create-form">
+                  <Link to="/org/create-form">
                     <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
                       Create New Event
                     </li>
@@ -172,4 +172,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default OrgNav;

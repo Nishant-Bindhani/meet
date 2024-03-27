@@ -10,6 +10,7 @@ import PageNotFound from "./components/HomePageComponents/PageNotFound";
 import OrgRegister from "./components/Organiser/OrgRegister";
 import CreateEventForm from "./components/Organiser/CreateEventForm";
 import EventSearchPage from "./components/EventPage/EventSearchPage";
+import OrgHome from "./pages/OrgHome";
 function App() {
   return (
     <div className="">
@@ -26,7 +27,8 @@ function App() {
 
           <Route path="/org-login" element={<OrgLogin />} />
           <Route path="/org-register" element={<OrgRegister />} />
-          <Route path="/admin/create-form" element={<CreateEventForm />} />
+          <Route path="/org" element={<OrgHome />} />
+          <Route path="/org/create-form" element={<CreateEventForm />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
