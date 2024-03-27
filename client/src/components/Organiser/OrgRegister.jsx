@@ -19,14 +19,14 @@ const OrgRegister = () => {
         state,
       });
       if (res && res.data.success) {
-        toast.success(res.data.message);
+        alert(res.data.message);
         navigate("/org-login");
       } else {
-        toast.error(res.data.message);
+        alert(res.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Invalid Email ");
+      alert("Invalid Email ");
     }
   };
   const handleNavigateHome = () => {

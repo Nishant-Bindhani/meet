@@ -4,8 +4,9 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import slugify from "slugify"; // Import slugify for creating slugs
 import "./Nav.css";
-
+import { useAuth } from "../../context/auth";
 const OrgNav = () => {
+  const [auth, setAuth] = useAuth();
   const [address, setAddress] = useState(null);
   const [error, setError] = useState(null);
   const [title, setTitle] = useState("");
@@ -16,10 +17,7 @@ const OrgNav = () => {
   const imgRef = useRef();
   const navigate = useNavigate();
 
-  let Links = [
-    { name: "Home", link: "/" },
-    { name: "Log In", link: "/login" },
-  ];
+  let Links = [{ name: "Home", link: "/" }];
 
   window.addEventListener("click", (e) => {
     if (e.target !== menuRef.current && e.target !== imgRef.current) {
@@ -76,6 +74,16 @@ const OrgNav = () => {
     setinputState("");
   };
 
+  const handleLogout = () => {
+    setAuth({
+      ...auth,
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("auth"); // delete data
+    alert("Logout Successfully");
+  };
+
   return (
     <div className="shadow-md w-full fixed top-0 left-0 z-50 font-display">
       <div className="md:flex items-center justify-between bg-slate-200 py-4 md:px-10 px-7 relative">
@@ -127,45 +135,60 @@ const OrgNav = () => {
               </NavLink>
             </li>
           ))}
-          <NavLink
-            to="/register"
-            className="bg-red-500 text-white py-2 px-6 rounded-lg md:ml-8 hover:bg-red-800 duration-500"
-          >
-            Sign Up
-          </NavLink>
-          <div className="pl-14">
-            <img
-              ref={imgRef}
-              onClick={() => setOpen(!open)}
-              src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="user"
-              className="h-14 w-14 object-cover border-4 border-gray-400 rounded-full cursor-pointer"
-            />
-            {open && (
-              <div
-                ref={menuRef}
-                className="absolute bg-gray-100 p-4 w-48 right-0.5 rounded"
+          {!auth.user ? (
+            <>
+              <NavLink
+                to="/register"
+                className="py-2 pl-6 text-lg text-gray-700 hover:text-red-600 duration-200"
               >
-                <ul>
-                  <Link to="/">
-                    <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
-                      Dashboard
-                    </li>
-                  </Link>
-                  <Link to="/org/create-form">
-                    <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
-                      Create New Event
-                    </li>
-                  </Link>
-                  <Link to="/login">
-                    <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
-                      LogOut
-                    </li>
-                  </Link>
-                </ul>
+                Log In
+              </NavLink>
+              <NavLink
+                to="/register"
+                className="bg-red-500 text-white py-2 px-6 rounded-lg md:ml-8 hover:bg-red-800 duration-500"
+              >
+                Sign Up
+              </NavLink>
+            </>
+          ) : (
+            <>
+              {" "}
+              <div className="pl-14">
+                <img
+                  ref={imgRef}
+                  onClick={() => setOpen(!open)}
+                  src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                  alt="user"
+                  className="h-14 w-14 object-cover border-4 border-gray-400 rounded-full cursor-pointer"
+                />
+                {open && (
+                  <div
+                    ref={menuRef}
+                    className="absolute bg-gray-100 p-4 w-48 right-0.5 rounded"
+                  >
+                    <ul>
+                      <Link to="/">
+                        <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
+                          Dashboard
+                        </li>
+                      </Link>
+                      <Link to="/org/create-form">
+                        <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
+                          Create New Event
+                        </li>
+                      </Link>
+
+                      <NavLink onClick={handleLogout} to="/org-login">
+                        <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
+                          LogOut
+                        </li>
+                      </NavLink>
+                    </ul>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </>
+          )}
         </ul>
       </div>
     </div>
