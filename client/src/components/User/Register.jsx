@@ -11,23 +11,23 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    //   const res = await axios.post("/api/v1/auth/register", {
-    //     name,
-    //     email,
-    //     password,
-    //     state,
-    //   });
-    //   if (res && res.data.success) {
-    //     toast.success(res.data.message);
-    //     navigate("/login");
-    //   } else {
-    //     toast.error(res.data.message);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error("Invalid Email ");
-    // }
+    try {
+      const res = await axios.post("/api/v1/auth/register", {
+        name,
+        email,
+        password,
+        state,
+      });
+      if (res && res.data.success) {
+        toast.success(res.data.message);
+        navigate("/login");
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Invalid Email ");
+    }
   };
   const handleNavigateHome = () => {
     navigate("/");

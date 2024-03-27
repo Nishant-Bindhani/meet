@@ -39,6 +39,10 @@ const Nav = () => {
         const response = await axios.get(url);
         setAddress(response.data.address);
         setinputState(response.data.address.state);
+        const data = localStorage.getItem("auth"); //getting from local storage
+        if (data) {
+          const parseData = JSON.parse(data);
+        }
         setError(null);
       } catch (error) {
         setAddress(null);
