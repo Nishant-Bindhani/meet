@@ -11,19 +11,24 @@ import OrgRegister from "./components/Organiser/OrgRegister";
 import CreateEventForm from "./components/Organiser/CreateEventForm";
 import EventSearchPage from "./components/EventPage/EventSearchPage";
 import OrgHome from "./pages/OrgHome";
+import MainEventPage from "./components/EventPage/MainEventPage";
+import PaymentScreen from "./components/EventPage/PayementScreen";
 function App() {
   return (
     <div className="">
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/pay/:title/:price" element={<PaymentScreen />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/user" element={<UserHome />} />
+          <Route path="/events/:title" element={<MainEventPage />} />
           <Route
-            path="/user/events/:slugTitle/:slugState"
+            path="/user/search/:slugTitle/:slugState"
             element={<EventSearchPage />}
           />
+          <Route path="/user/search/:slugState" element={<EventSearchPage />} />
 
           <Route path="/org-login" element={<OrgLogin />} />
           <Route path="/org-register" element={<OrgRegister />} />

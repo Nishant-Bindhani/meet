@@ -20,6 +20,7 @@ const EventsNear = () => {
         const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
         const response = await axios.get(url);
         setAddress(response.data.address);
+
         setError(null); // Reset error state if location access is successful
       } catch (error) {
         setAddress(null); // Reset address state if there's an error
@@ -46,9 +47,9 @@ const EventsNear = () => {
       {address && address.state && (
         <div className="mt-32">
           <div className="max-w-[1320px] mx-auto">
-            <h1 className="text-2xl pt-4 line-w tracking-tight font-semibold text-center">
+            <h1 className=" pt-4 line-w font-medium text-3xl font-bebas tracking-tight  text-center">
               Events Near Your Location:{" "}
-              <span className="bg-slate-800 rounded-xl py-2 px-3 text-gray-300 text-2xl">
+              <span className="bg-slate-800 rounded-3xl py-2 px-3 text-gray-300 text-3xl ">
                 {address.state}
               </span>
             </h1>
@@ -76,7 +77,10 @@ const EventsNear = () => {
                     slugify(address.state.toLowerCase())
               )
               .map((filteredEvent) => (
-                <Link to="/" key={filteredEvent.id}>
+                <Link
+                  to={`/events/${encodeURIComponent(filteredEvent.title)}`}
+                  key={filteredEvent.id}
+                >
                   <Card
                     img={filteredEvent.img}
                     title={filteredEvent.title}

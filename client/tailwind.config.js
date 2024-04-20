@@ -17,5 +17,10 @@ export default {
       dance: ["Dancing Script", "cursive"],
     },
   },
+  extend: {
+    backgroundImage: {
+      hero: "url('https://images.pexels.com/photos/2747449/pexels-photo-2747449.jpeg?auto=compress&cs=tinysrgb&w=600')",
+    },
+  },
   plugins: [require("tailwind-scrollbar")],
 };

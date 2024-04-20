@@ -18,7 +18,7 @@ const Login = () => {
         password,
       });
       if (res && res.data.success) {
-        toast.success(res.data.message);
+        alert(res.data.message);
         setAuth({
           ...auth,
           user: res.data.user,
@@ -27,11 +27,11 @@ const Login = () => {
         localStorage.setItem("auth", JSON.stringify(res.data));
         navigate("/user");
       } else {
-        toast.error(res.data.message);
+        alert(res.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Email Not registered");
+      alert("Email Not registered");
     }
   };
 
@@ -42,8 +42,10 @@ const Login = () => {
     <div className="w-full h-screen flex items-start font-display">
       <div className="relative w-1/2 h-full flex flex-col">
         <div className="absolute top-[20%] left-[10%] flex flex-col bg-white py-5 px-10 mr-14">
-          <h1 className="text-4xl text-black font-bold my-4 ">MEET&GREET</h1>
-          <p className="text-xl text-black font-normal ">
+          <div className="font-extrabold text-4xl cursor-pointer flex items-center text-red-700 font-dance ">
+            Meet&Greet
+          </div>
+          <p className="text-2xl text-gray-600 mt-2 font-bebas">
             Join us for attending the most amazing events around the country
           </p>
         </div>
@@ -111,14 +113,7 @@ const Login = () => {
               />
             </div>
 
-            <div className="w-full flex items-center justify-end pt-1">
-              <Link
-                to="/forgot-password"
-                className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2 hover:opacity-70"
-              >
-                Forgot Password ?
-              </Link>
-            </div>
+            <div className="w-full flex items-center justify-end pt-1"></div>
             <div className="w-full flex flex-col my-4">
               <button className="w-full text-white my-2 font-semibold bg-[#060606] rounded-md p-4 text-center flex items-center justify-center hover:opacity-80">
                 Log in

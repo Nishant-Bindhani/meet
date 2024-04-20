@@ -2,7 +2,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="relative top-[66px] h-full w-full font-display">
+    <div className="relative top-[76.5px] h-full w-full font-display">
       <img
         src="https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         alt="Background Image"

@@ -21,6 +21,7 @@ const CreateEventForm = () => {
   const handleStartDateChange = (date) => {
     if (endDate && date > endDate) {
       setError1("Start date must be before or equal to the end date.");
+
       setStartDate(endDate);
     } else {
       setStartDate(date);
@@ -128,6 +129,7 @@ const CreateEventForm = () => {
                   placeholderText={"Please Select The Starting Date And Time"}
                   className="appearance-none bg-gray-200 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" // Custom class to set width to full
                 />
+                {console.log(startDate)}
               </div>
             </div>
             <div>

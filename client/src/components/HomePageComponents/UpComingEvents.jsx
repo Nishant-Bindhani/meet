@@ -6,7 +6,7 @@ const UpComingEvents = () => {
   return (
     <div className="mt-32 font-display">
       <div className="max-w-[1320px] mx-auto">
-        <h1 className="text-3xl pt-4 line-w tracking-tight font-semibold text-center">
+        <h1 className="text-4xl pt-4 line-w font-medium text-center font-bebas tracking-tight ">
           Upcoming Events
         </h1>
         <div className="inline-flex items-center justify-center w-full">
@@ -26,8 +26,7 @@ const UpComingEvents = () => {
       </div>
       <div className="max-w-[1320px] mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-5 px-3 py-4">
         {jsondata.map((e) => (
-          <Link to="/" key={e.id}>
-            {/* Key prop moved to Card */}
+          <Link to={`/events/${encodeURIComponent(e.title)}`} key={e.id}>
             <Card
               img={e.img}
               title={e.title}

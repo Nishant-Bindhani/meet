@@ -3,9 +3,13 @@ import { SlCalender } from "react-icons/sl";
 import { IoTicketOutline } from "react-icons/io5";
 const Card = (props) => {
   return (
-    <div className="shadow-2xl rounded-md  hover:scale-105 duration-200">
-      <div className="overflow-hidden">
-        <img src={props.img} className="hover:scale-125 duration-1000" />
+    <div className="shadow-2xl rounded-md hover:scale-105 duration-200 h-full border-2 border-slate-200">
+      <div className="overflow-hidden h-60">
+        <img
+          src={props.img}
+          className="hover:scale-125 duration-1000 w-full h-full object-cover"
+          alt={props.title}
+        />
       </div>
       <h1 className="py-2 px-3 text-xl font-semibold hover:underline">
         {props.title}

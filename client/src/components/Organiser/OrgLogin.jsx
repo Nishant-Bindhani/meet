@@ -6,9 +6,30 @@ const OrgLogin = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const handleSubmit = (e) => {
-    // Prevent the default form submission behavior
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // Prevent the default form submission behavior
+    try {
+      const res = await axios.post("/api/v1/auth/login", {
+        email,
+        password,
+      });
+      if (res && res.data.success && res.data.admin) {
+        alert(res.data.message);
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(res.data));
+        navigate("/org");
+      } else {
+        alert(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Email Not registered");
+    }
     // Handle form submission logic here if needed
   };
   const handleNavigateHome = () => {
@@ -87,14 +108,7 @@ const OrgLogin = () => {
               />
             </div>
 
-            <div className="w-full flex items-center justify-end pt-1">
-              <Link
-                to="/forgot-password"
-                className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2 hover:opacity-70"
-              >
-                Forgot Password ?
-              </Link>
-            </div>
+            <div className="w-full flex items-center justify-end pt-1"></div>
             <div className="w-full flex flex-col my-4">
               <button className="w-full text-white my-2 font-semibold bg-[#060606] rounded-md p-4 text-center flex items-center justify-center">
                 Log in
