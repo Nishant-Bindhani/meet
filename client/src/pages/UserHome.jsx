@@ -1,13 +1,14 @@
 import EventsNear from "../components/HomePageComponents/EventsNear.jsx";
 import Footer from "../components/HomePageComponents/Footer.jsx";
 import Hero from "../components/HomePageComponents/Hero.jsx";
-import Nav from "../components/HomePageComponents/Nav.jsx";
+
+import OrgNav from "../components/HomePageComponents/OrgNav.jsx";
 import UpComingEvents from "../components/HomePageComponents/UpComingEvents.jsx";
 
 const UserHome = () => {
   return (
     <div>
-      <Nav />
+      <OrgNav />
       <Hero />
       <UpComingEvents />
       <EventsNear />

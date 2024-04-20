@@ -22,8 +22,10 @@ function App() {
           <Route path="/pay/:title/:price" element={<PaymentScreen />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/user" element={<UserHome />} />
           <Route path="/events/:title" element={<MainEventPage />} />
+          <Route path="/user" element={<UserHome />} />
+          <Route path="/user/events/:title" element={<MainEventPage />} />
+
           <Route
             path="/user/search/:slugTitle/:slugState"
             element={<EventSearchPage />}
@@ -33,6 +35,7 @@ function App() {
           <Route path="/org-login" element={<OrgLogin />} />
           <Route path="/org-register" element={<OrgRegister />} />
           <Route path="/org" element={<OrgHome />} />
+          <Route path="/org/events/:title" element={<MainEventPage />} />
           <Route path="/org/create-form" element={<CreateEventForm />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>

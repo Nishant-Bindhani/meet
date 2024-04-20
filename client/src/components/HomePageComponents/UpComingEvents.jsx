@@ -1,8 +1,10 @@
 import Card from "./Card.jsx";
 import jsondata from "./dummyevents.js";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/auth";
 
 const UpComingEvents = () => {
+  const [auth, setAuth] = useAuth();
   return (
     <div className="mt-32 font-display">
       <div className="max-w-[1320px] mx-auto">
@@ -26,7 +28,16 @@ const UpComingEvents = () => {
       </div>
       <div className="max-w-[1320px] mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-5 px-3 py-4">
         {jsondata.map((e) => (
-          <Link to={`/events/${encodeURIComponent(e.title)}`} key={e.id}>
+          <Link
+            to={
+              auth.user
+                ? `/user/events/${encodeURIComponent(e.title)}`
+                : auth.user && auth.user.admin
+                ? `/org/events/${encodeURIComponent(e.title)}`
+                : `/events/${encodeURIComponent(e.title)}`
+            }
+            key={e.id}
+          >
             <Card
               img={e.img}
               title={e.title}
