@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import QRCode from "qrcode.react";
 import html2canvas from "html2canvas";
 import { useAuth } from "../../context/auth";
-const [auth, setAuth] = useAuth();
 
 const PaymentScreen = () => {
   const { title, price } = useParams();
