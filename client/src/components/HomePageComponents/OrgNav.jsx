@@ -17,7 +17,7 @@ const OrgNav = () => {
   const imgRef = useRef();
   const navigate = useNavigate();
 
-  let Links = [{ name: "Home", link: "/" }];
+  let Links = [{ name: "Home", link: "/org" }];
 
   window.addEventListener("click", (e) => {
     if (e.target !== menuRef.current && e.target !== imgRef.current) {
@@ -86,8 +86,8 @@ const OrgNav = () => {
 
   return (
     <div className="shadow-md w-full fixed top-0 left-0 z-50 font-display">
-      <div className="md:flex items-center justify-between bg-slate-200 py-4 md:px-10 px-7 relative">
-        <div className="font-extrabold text-4xl cursor-pointer flex items-center text-red-700 font-dance ">
+      <div className="md:flex items-center justify-between bg-slate-800 py-4 md:px-10 px-7 relative">
+        <div className="font-extrabold text-4xl flex items-center text-red-50 rounded-xl font-dance ">
           Meet&Greet
         </div>
 
@@ -129,7 +129,7 @@ const OrgNav = () => {
             <li key={l.name} className="md:ml-8 text-lg ">
               <NavLink
                 to={l.link}
-                className="text-gray-700 hover:text-red-600 duration-200"
+                className="py-2 pl-6 text-lg text-white hover:text-gray-400 duration-200"
               >
                 {l.name}
               </NavLink>
@@ -139,7 +139,7 @@ const OrgNav = () => {
             <>
               <NavLink
                 to="/register"
-                className="py-2 pl-6 text-lg text-gray-700 hover:text-red-600 duration-200"
+                className="py-2 pl-6 text-lg text-white hover:text-gray-400 duration-200"
               >
                 Log In
               </NavLink>
