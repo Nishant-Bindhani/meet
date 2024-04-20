@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import QRCode from "qrcode.react";
 import html2canvas from "html2canvas";
+import { useAuth } from "../../context/auth";
+const [auth, setAuth] = useAuth();
 
 const PaymentScreen = () => {
   const { title, price } = useParams();
@@ -29,7 +31,8 @@ const PaymentScreen = () => {
 
   // Function to handle manual redirection
   const handleRedirect = () => {
-    navigate(`/events/${title}`);
+    if (auth.user && !auth.user.admin) navigate(`/user/events/${title}`);
+    else navigate(`/events/${title}`);
   };
   const handleDownload = () => {
     // Hide the buttons
@@ -74,18 +77,23 @@ const PaymentScreen = () => {
 
           <h1 className="text-2xl font-bold">Invoice</h1>
         </div>
-        <div className="mb-6">
-          <p className="font-mono">
-            <span className="font-semibold font-display">Payment Date:</span>
-            {"  "}
-            {new Date().toLocaleDateString()}
-          </p>
-          <p className="font-mono">
-            <span className="font-semibold font-display">Transaction ID: </span>
-            {"    "}
-            {paymentDetails.transaction_id}
-          </p>
-        </div>
+        {paymentReceived && (
+          <div className="mb-6">
+            <p className="font-mono">
+              <span className="font-semibold font-display">Payment Date:</span>
+              {"  "}
+              {new Date().toLocaleDateString()}
+            </p>
+            <p className="font-mono">
+              <span className="font-semibold font-display">
+                Transaction ID:{" "}
+              </span>
+              {"    "}
+              {paymentDetails.transaction_id}
+            </p>
+          </div>
+        )}
+
         {paymentReceived ? (
           <div>
             <div className="mb-6">
