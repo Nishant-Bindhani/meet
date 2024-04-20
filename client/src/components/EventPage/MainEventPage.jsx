@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import Nav from "../HomePageComponents/Nav";
 import slugify from "slugify";
 import axios from "axios";
+import { useAuth } from "../../context/auth";
 import Footer from "../HomePageComponents/Footer";
 import jsondata from "../HomePageComponents/dummyevents.js";
 import { Link } from "react-router-dom";
 const MainEventPage = () => {
+  const [auth, setAuth] = useAuth();
   const { title } = useParams();
   const etitle = decodeURIComponent(title);
   const slugtitle = slugify(etitle).toLowerCase();
@@ -82,7 +84,19 @@ const MainEventPage = () => {
             <p className="text-gray-800 ml-12">{searchTitle[0].description}</p>
           </div>
           <div className="mb-[-7rem]  mt-12 flex justify-center">
-            <Link to={`/pay/${searchTitle[0].title}/${searchTitle[0].price}`}>
+            auth.user ? `/user/events/${encodeURIComponent(e.title)}` :
+            auth.user && auth.user.admin ? `/org/events/$
+            {encodeURIComponent(e.title)}` : `/events/$
+            {encodeURIComponent(e.title)}`
+            <Link
+              to={
+                auth.user
+                  ? `/user/pay/${searchTitle[0].title}/${searchTitle[0].price}`
+                  : auth.user && auth.user.admin
+                  ? `/org/pay/${searchTitle[0].title}/${searchTitle[0].price}`
+                  : `/pay/${searchTitle[0].title}/${searchTitle[0].price}`
+              }
+            >
               <button className=" bg-red-600 hover:bg-red-800 text-white  py-2 px-8 mr-4 rounded-lg hover:scale-110 duration-1000">
                 Attend
               </button>

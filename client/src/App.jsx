@@ -19,12 +19,13 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/pay/:title/:price" element={<PaymentScreen />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/events/:title" element={<MainEventPage />} />
           <Route path="/user" element={<UserHome />} />
           <Route path="/user/events/:title" element={<MainEventPage />} />
+          <Route path="/user/pay/:title/:price" element={<PaymentScreen />} />
+          <Route path="/pay/:title/:price" element={<PaymentScreen />} />
 
           <Route
             path="/user/search/:slugTitle/:slugState"
@@ -37,6 +38,7 @@ function App() {
           <Route path="/org" element={<OrgHome />} />
           <Route path="/org/events/:title" element={<MainEventPage />} />
           <Route path="/org/create-form" element={<CreateEventForm />} />
+          <Route path="/org/pay/:title/:price" element={<PaymentScreen />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
