@@ -6,6 +6,7 @@ import { useAuth } from "../../context/auth";
 
 const PaymentScreen = () => {
   const { title, price } = useParams();
+  const [auth, setAuth] = useAuth();
   const navigate = useNavigate(); // Hook for navigation
   const contentRef = useRef(null);
 
