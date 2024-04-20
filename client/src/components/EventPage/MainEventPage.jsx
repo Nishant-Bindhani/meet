@@ -84,10 +84,6 @@ const MainEventPage = () => {
             <p className="text-gray-800 ml-12">{searchTitle[0].description}</p>
           </div>
           <div className="mb-[-7rem]  mt-12 flex justify-center">
-            auth.user ? `/user/events/${encodeURIComponent(e.title)}` :
-            auth.user && auth.user.admin ? `/org/events/$
-            {encodeURIComponent(e.title)}` : `/events/$
-            {encodeURIComponent(e.title)}`
             <Link
               to={
                 auth.user
