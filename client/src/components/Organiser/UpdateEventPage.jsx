@@ -88,7 +88,7 @@ const UpdateEventPage = () => {
         eventData
       );
       if (data?.status) {
-        navigate("/org");
+        navigate("/org/home");
         alert("Event Update Successfully");
       } else {
         console.log("Something wrong in Updation");

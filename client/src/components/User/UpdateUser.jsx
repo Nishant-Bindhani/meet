@@ -30,7 +30,7 @@ const UpdateUser = () => {
       });
       if (res && res.data.success) {
         alert("Profile Updated Successfully");
-        navigate("/user");
+        navigate("/user/home");
       } else {
         alert("Failed to Update");
       }

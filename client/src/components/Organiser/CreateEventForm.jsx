@@ -63,7 +63,7 @@ const CreateEventForm = () => {
       );
       if (data?.success) {
         console.log(data?.message);
-        navigate("/org");
+        navigate("/org/home");
       } else {
         console.log(data?.message);
       }
