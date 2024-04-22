@@ -10,7 +10,7 @@ const OrgLogin = () => {
     e.preventDefault();
     // Prevent the default form submission behavior
     try {
-      const res = await axios.post("/api/v1/auth/login", {
+      const res = await axios.post("/api/login", {
         email,
         password,
       });
