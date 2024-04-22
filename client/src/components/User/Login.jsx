@@ -35,7 +35,7 @@ const Login = () => {
           localStorage.removeItem("redirectPath");
         } else {
           // If redirectPath does not exist, navigate to /user
-          navigate("/user");
+          navigate("/user/home");
         }
       } else {
         alert(res.data.message);

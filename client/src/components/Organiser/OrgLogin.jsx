@@ -22,7 +22,7 @@ const OrgLogin = () => {
           token: res.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(res.data));
-        navigate("/org");
+        navigate("/org/home");
       } else {
         alert(res.data.message);
       }
