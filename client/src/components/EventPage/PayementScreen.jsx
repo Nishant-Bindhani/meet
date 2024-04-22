@@ -3,9 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import QRCode from "qrcode.react";
 import html2canvas from "html2canvas";
 import { useAuth } from "../../context/auth";
+import axios from "axios";
 
 const PaymentScreen = () => {
-  const { title, price } = useParams();
+  const { title, price, id } = useParams();
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate(); // Hook for navigation
   const contentRef = useRef(null);
@@ -13,9 +14,8 @@ const PaymentScreen = () => {
   const [paymentReceived, setPaymentReceived] = useState(false);
 
   const paymentDetails = {
-    recipient: "Meet&Greet",
-    amount: price, // Convert price to a number
-    currency: "USD",
+    user: auth.userdata.name,
+    amount: parseFloat(price), // Convert price to a number
     description: `${title.replace(/-/g, " ")}`, // Include event title in description
     transaction_id: "#" + Math.floor(Math.random() * 100000000000),
   };
@@ -23,16 +23,34 @@ const PaymentScreen = () => {
   const qrCodeValue = JSON.stringify(paymentDetails);
 
   // Function to handle payment confirmation
-  const handlePaymentConfirmation = () => {
-    setPaymentReceived(true);
+  const handlePaymentConfirmation = async () => {
+    try {
+      const res = await axios.get(
+        `/api/user/attend_event/${auth.userdata.email}/${id}`
+      );
+      if (res && res.data.success) {
+        const { pay } = await axios.get(
+          `/api/user/confirm_payment/${id}/${auth.userdata.email}`
+        );
+        if (pay) {
+          setPaymentReceived(true);
+          alert("Payement Successfully Done");
+        }
+      } else {
+        alert("Payment was not successful.");
+      }
+    } catch (error) {
+      console.error("Error confirming payment:", error);
+      alert("An error occurred while confirming the payment.");
+    }
   };
-
   // Function to redirect after countdown
 
   // Function to handle manual redirection
   const handleRedirect = () => {
-    if (auth.user && !auth.user.admin) navigate(`/user/events/${title}`);
-    else navigate(`/events/${title}`);
+    if (auth.userdata && !auth.userdata.organizer)
+      navigate(`/user/events/${title}/${id}`);
+    else navigate(`/events/${title}/${id}`);
   };
   const handleDownload = () => {
     // Hide the buttons
@@ -106,7 +124,7 @@ const PaymentScreen = () => {
               </div>
               <div className="flex justify-between mb-2">
                 <span className="font-semibold">Amount:</span>
-                <span>${paymentDetails.amount}</span>
+                <span>Rs. ${paymentDetails.amount}</span>
               </div>
               <div className="flex justify-center mb-2 mt-4 text-red-800 font-bebas text-xl ">
                 <span>{paymentDetails.description}</span>

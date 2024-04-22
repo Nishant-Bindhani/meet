@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card.jsx";
-import jsondata from "./dummyevents.js";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import slugify from "slugify";
+import { useAuth } from "../../context/auth";
 
 const EventsNear = () => {
   const [address, setAddress] = useState(null);
   const [error, setError] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [auth, setAuth] = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -29,6 +30,21 @@ const EventsNear = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    if (address && address.state) {
+      const fetchEvents = async () => {
+        try {
+          const { data } = await axios.get(`/api/home/${address.state}`);
+          setEvents(data.events_near_me);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      fetchEvents();
+    }
+  }, [address]);
+
   if (!address && error) {
     return (
       <div className="">
@@ -47,9 +63,9 @@ const EventsNear = () => {
       {address && address.state && (
         <div className="mt-32">
           <div className="max-w-[1320px] mx-auto">
-            <h1 className=" pt-4 line-w font-medium text-3xl font-bebas tracking-tight  text-center">
+            <h1 className="pt-4 line-w font-medium text-3xl font-bebas tracking-tight text-center">
               Events Near Your Location:{" "}
-              <span className="bg-slate-800 rounded-3xl py-2 px-3 text-gray-300 text-3xl ">
+              <span className="bg-slate-800 rounded-3xl py-2 px-3 text-gray-300 text-3xl">
                 {address.state}
               </span>
             </h1>
@@ -69,27 +85,32 @@ const EventsNear = () => {
             </div>
           </div>
           <div className="max-w-[1320px] mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-5 px-3 py-4">
-            {jsondata
-              .filter(
-                (e) =>
-                  e.state &&
-                  slugify(e.state.toLowerCase()) ===
-                    slugify(address.state.toLowerCase())
-              )
-              .map((filteredEvent) => (
-                <Link
-                  to={`/events/${encodeURIComponent(filteredEvent.title)}`}
-                  key={filteredEvent.id}
-                >
-                  <Card
-                    img={filteredEvent.img}
-                    title={filteredEvent.title}
-                    host={filteredEvent.host}
-                    time={filteredEvent.time}
-                    price={filteredEvent.price}
-                  />
-                </Link>
-              ))}
+            {events.map((e) => (
+              <Link
+                to={
+                  auth.userdata
+                    ? `/user/events/${encodeURIComponent(e.title)}/${e.state}/${
+                        e.event_id
+                      }`
+                    : auth.userdata && auth.userdata.organizer
+                    ? `/org/events/${encodeURIComponent(e.title)}/${e.state}/${
+                        e.event_id
+                      }`
+                    : `/events/${encodeURIComponent(e.title)}/${e.state}${
+                        e.event_id
+                      }`
+                }
+                key={e.event_id}
+              >
+                <Card
+                  img={e.img}
+                  title={e.title}
+                  host={e.host}
+                  time={e.time}
+                  price={e.price}
+                />
+              </Link>
+            ))}
           </div>
         </div>
       )}

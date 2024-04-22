@@ -1,35 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Nav from "../HomePageComponents/Nav";
 import slugify from "slugify";
 import axios from "axios";
 import { useAuth } from "../../context/auth";
 import Footer from "../HomePageComponents/Footer";
-import jsondata from "../HomePageComponents/dummyevents.js";
-import { Link } from "react-router-dom";
+
 const MainEventPage = () => {
   const [auth, setAuth] = useAuth();
-  const { title } = useParams();
+  const { title, state, id } = useParams();
   const etitle = decodeURIComponent(title);
   const slugtitle = slugify(etitle).toLowerCase();
   const [searchTitle, setSearchTitle] = useState("");
+  const [events, setEvents] = useState([]);
+  const [mainEvent, setMainEvent] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEventData = async () => {
       try {
+        const { data } = await axios.get(`/api/home/${state}`);
+        setEvents(data.events);
         const slug = slugify(etitle).toLowerCase();
         // const response = await axios.get(`/api/v1/events/${slug}`);
         // console.log(response.data); // Assuming the response contains event data
-        const filteredEvents = jsondata.filter((event) => {
-          return slugify(event.title).toLowerCase() === slugtitle;
+        const filteredEvents = events.filter((event) => {
+          return (
+            slugify(event.title).toLowerCase() === slugtitle &&
+            event.event_id === id
+          );
         });
         setSearchTitle(filteredEvents);
+        const { otherres } = await axios.get(`/api/get_event/${id}`);
+        setMainEvent(otherres);
       } catch (error) {
         console.error("Error fetching event data:", error);
       }
     };
     fetchEventData();
   }, []);
+  const handleAttendButtonClick = () => {
+    if (!auth?.userdata) {
+      // If user is not authenticated, store the current location before redirecting to login
+      localStorage.setItem("redirectPath", window.location.pathname);
+      navigate("/login");
+    }
+    navigate(
+      `/user/pay/${searchTitle[0].title}/${searchTitle[0].price}/${searchTitle[0].event_id}`
+    );
+  };
   return (
     <div className="bg-slate-100">
       <Nav />
@@ -84,19 +104,13 @@ const MainEventPage = () => {
             <p className="text-gray-800 ml-12">{searchTitle[0].description}</p>
           </div>
           <div className="mb-[-7rem]  mt-12 flex justify-center">
-            <Link
-              to={
-                auth.user
-                  ? `/user/pay/${searchTitle[0].title}/${searchTitle[0].price}`
-                  : auth.user && auth.user.admin
-                  ? `/org/pay/${searchTitle[0].title}/${searchTitle[0].price}`
-                  : `/pay/${searchTitle[0].title}/${searchTitle[0].price}`
-              }
+            <button
+              className=" bg-red-600 hover:bg-red-800 text-white  py-2 px-8 mr-4 rounded-lg hover:scale-110 duration-1000"
+              onClick={handleAttendButtonClick}
             >
-              <button className=" bg-red-600 hover:bg-red-800 text-white  py-2 px-8 mr-4 rounded-lg hover:scale-110 duration-1000">
-                Attend
-              </button>
-            </Link>
+              Attend
+            </button>
+
             <button className="bg-green-700 hover:bg-green-900 text-white rounded-lg py-2 px-8 hover:scale-110 duration-1000">
               View on Map
             </button>

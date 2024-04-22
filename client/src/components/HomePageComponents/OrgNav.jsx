@@ -17,7 +17,7 @@ const OrgNav = () => {
   const imgRef = useRef();
   const navigate = useNavigate();
 
-  let Links = [{ name: "Home", link: "/org" }];
+  let Links = [{ name: "Home", link: "/org/home" }];
 
   window.addEventListener("click", (e) => {
     if (e.target !== menuRef.current && e.target !== imgRef.current) {
@@ -74,7 +74,8 @@ const OrgNav = () => {
     setinputState("");
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const { res } = await axios.get(`/api/logout/${auth.userdata.email}`);
     setAuth({
       ...auth,
       user: null,
@@ -91,38 +92,7 @@ const OrgNav = () => {
           Meet&Greet
         </div>
 
-        <div className="topbarCenter ml-32 relative shadow-2xl">
-          <form className="searchForm flex" onSubmit={handleSubmit}>
-            <div className="searchBar">
-              <CiSearch className="searchIcon" />
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Search for events..."
-                className="searchInput"
-              />
-            </div>
-            <div className="searchBar2">
-              <input
-                type="text"
-                className="searchInput2"
-                placeholder={placeholder ? placeholder : "Enter The State..."}
-                value={inputState}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="absolute right-0 top-0 h-full px-1 bg-red-500 text-white rounded-r-lg hover:bg-red-600"
-            >
-              <CiSearch className="searchIcon mr-3" />
-            </button>
-          </form>
-        </div>
+        <div className="topbarCenter ml-32 relative shadow-2xl"></div>
 
         <ul className="md:flex md:items-center ">
           {Links.map((l) => (
@@ -135,7 +105,7 @@ const OrgNav = () => {
               </NavLink>
             </li>
           ))}
-          {!auth.user ? (
+          {!auth.userdata ? (
             <>
               <NavLink
                 to="/register"
@@ -167,14 +137,15 @@ const OrgNav = () => {
                     className="absolute bg-gray-100 p-4 w-48 right-0.5 rounded"
                   >
                     <ul>
-                      <Link to="/">
-                        <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
-                          Dashboard
-                        </li>
-                      </Link>
                       <Link to="/org/create-form">
                         <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
                           Create New Event
+                        </li>
+                      </Link>
+
+                      <Link to="/org/update-org">
+                        <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
+                          Profile Settings
                         </li>
                       </Link>
 

@@ -5,7 +5,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
-    user: null,
+    userdata: null,
     token: "",
   });
 
@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
       const parseData = JSON.parse(data);
       setAuth({
         ...auth,
-        user: parseData.user,
+        userdata: parseData.userdata,
         token: parseData.token,
       });
     }

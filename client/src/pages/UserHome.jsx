@@ -1,3 +1,4 @@
+import AttendingEvents from "../components/HomePageComponents/AttendingEvents.jsx";
 import EventsNear from "../components/HomePageComponents/EventsNear.jsx";
 import Footer from "../components/HomePageComponents/Footer.jsx";
 import Hero from "../components/HomePageComponents/Hero.jsx";
@@ -12,6 +13,7 @@ const UserHome = () => {
       <Hero />
       <UpComingEvents />
       <EventsNear />
+      <AttendingEvents />
       <Footer />
     </div>
   );

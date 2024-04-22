@@ -13,6 +13,12 @@ import EventSearchPage from "./components/EventPage/EventSearchPage";
 import OrgHome from "./pages/OrgHome";
 import MainEventPage from "./components/EventPage/MainEventPage";
 import PaymentScreen from "./components/EventPage/PayementScreen";
+import UpdateEventPage from "./components/Organiser/UpdateEventPage";
+import UpdateUser from "./components/User/UpdateUser";
+import UpdateOrg from "./components/Organiser/UpdateOrg";
+import ShowEvent from "./components/Organiser/ShowEvent";
+import { PrivateRoute } from "./Routes/PrivateRoute";
+import { AdminRoute } from "./Routes/AdminRoute";
 function App() {
   return (
     <div className="">
@@ -21,24 +27,56 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/events/:title" element={<MainEventPage />} />
-          <Route path="/user" element={<UserHome />} />
-          <Route path="/user/events/:title" element={<MainEventPage />} />
-          <Route path="/user/pay/:title/:price" element={<PaymentScreen />} />
-          <Route path="/pay/:title/:price" element={<PaymentScreen />} />
-
+          <Route path="/events/:title/:state/:id" element={<MainEventPage />} />
           <Route
-            path="/user/search/:slugTitle/:slugState"
+            path="/search/:slugTitle/:slugState"
             element={<EventSearchPage />}
           />
-          <Route path="/user/search/:slugState" element={<EventSearchPage />} />
+
+          <Route path="/user" element={<PrivateRoute />}>
+            <Route path="home" element={<UserHome />} />
+            <Route path="update-user" element={<UpdateUser />} />
+            <Route
+              path="events/:title/:state/:id"
+              element={<MainEventPage />}
+            />
+            <Route path="pay/:title/:price/:id" element={<PaymentScreen />} />
+            <Route
+              path="search/:slugTitle/:slugState"
+              element={<EventSearchPage />}
+            />
+          </Route>
+          {/* <Route path="/user/update-user" element={<UpdateUser />} /> */}
+          {/* <Route
+            path="/user/events/:title/:state/:id"
+            element={<MainEventPage />}
+          /> */}
+          {/* <Route
+            path="/user/pay/:title/:price/:id"
+            element={<PaymentScreen />}
+          /> */}
+
+          {/* <Route
+            path="/user/search/:slugTitle/:slugState"
+            element={<EventSearchPage />}
+          /> */}
 
           <Route path="/org-login" element={<OrgLogin />} />
           <Route path="/org-register" element={<OrgRegister />} />
-          <Route path="/org" element={<OrgHome />} />
-          <Route path="/org/events/:title" element={<MainEventPage />} />
-          <Route path="/org/create-form" element={<CreateEventForm />} />
-          <Route path="/org/pay/:title/:price" element={<PaymentScreen />} />
+
+          <Route path="/org" element={<AdminRoute />}>
+            <Route path="home" element={<OrgHome />} />
+            <Route path="update-org" element={<UpdateOrg />} />
+            <Route path="create-form" element={<CreateEventForm />} />
+            <Route path="update-event/:id" element={<UpdateEventPage />} />
+            <Route path="show-event/:id" element={<ShowEvent />} />
+          </Route>
+          {/* <Route path="/org/update-org" element={<UpdateOrg />} /> */}
+
+          {/* <Route path="/org/create-form" element={<CreateEventForm />} />
+          <Route path="/org/update-event/:id" element={<UpdateEventPage />} />
+          <Route path="/org/show-event/:id" element={<ShowEvent />} /> */}
+
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>

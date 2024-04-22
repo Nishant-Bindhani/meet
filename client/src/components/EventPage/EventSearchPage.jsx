@@ -1,40 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import Nav from "../HomePageComponents/Nav";
 import Footer from "../HomePageComponents/Footer";
-import jsondata from "../HomePageComponents/dummyevents";
-import slugify from "slugify";
 import Card from "../HomePageComponents/Card"; // Import the Card component from your project
+import { useAuth } from "../../context/auth";
+import UserNav from "../HomePageComponents/UserNav";
 
 const EventSearchPage = () => {
   const { slugTitle, slugState } = useParams();
-  const [searchResults, setSearchResults] = useState([]);
+  const [auth, setAuth] = useAuth();
+  const { state } = useLocation();
+  const [searchResults, setSearchResults] = useState(state?.events || []);
   const [searchTitle, setSearchTitle] = useState("");
 
   useEffect(() => {
-    const search = async () => {
-      try {
-        console.log("SEARCH RESULT" + slugTitle);
-        const filteredEvents = jsondata.filter((event) => {
-          console.log(slugify(event.title).toLowerCase());
-          return slugTitle && slugState
-            ? slugify(event.title).toLowerCase().includes(slugTitle) &&
-                slugify(event.state).toLowerCase().includes(slugState)
-            : slugify(event.state).toLowerCase().includes(slugState);
-        });
-        setSearchResults(filteredEvents);
-        setSearchTitle(slugTitle.replace(/-/g, " ")); // Replace hyphens with spaces
-        // Replace hyphens with spaces
-      } catch (error) {
-        console.error("Error filtering event data:", error);
-      }
-    };
-    search();
-  }, [slugTitle, slugState]);
+    setSearchResults(state?.events || []);
+    setSearchTitle(slugTitle); //
+  }, [state, slugTitle]);
 
   return (
     <div className="font-display">
-      <Nav />
+      {!auth.userdata && <Nav />}
+      {auth.userdata && <UserNav />}
       <div className="mt-24 ">
         <div className="text-center w-full mt-32">
           {slugTitle ? (
@@ -72,8 +59,23 @@ const EventSearchPage = () => {
           </div>
         </div>
         <div className="max-w-[1320px] mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-5 px-3 ">
-          {searchResults.map((event, index) => (
-            <Link to={`/events/${encodeURIComponent(event.title)}`} key={index}>
+          {searchResults.map((event) => (
+            <Link
+              to={
+                auth.userdata
+                  ? `/user/events/${encodeURIComponent(event.title)}/${
+                      event.state
+                    }/${event.event_id}`
+                  : auth.userdata && auth.userdata.organizer
+                  ? `/org/events/${encodeURIComponent(event.title)}/${
+                      event.state
+                    }/${event.event_id}`
+                  : `/events/${encodeURIComponent(event.title)}/${event.state}${
+                      event.event_id
+                    }`
+              }
+              key={event.index}
+            >
               <Card
                 img={event.img}
                 title={event.title}

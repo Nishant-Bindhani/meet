@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import slugify from "slugify"; // Import slugify for creating slugs
+
 import "./Nav.css";
 import { useAuth } from "../../context/auth";
 const Nav = () => {
@@ -62,17 +62,26 @@ const Nav = () => {
     setinputState(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // Create slugs for title and inputState
-    const slugTitle = slugify(title, { lower: true });
-    const slugState = slugify(inputState, { lower: true });
-    // Navigate to a different page with the slugs in the URL
-    if (slugTitle === "") {
-      navigate(`/user/search/${slugState}`);
-    } else {
-      navigate(`/user/search/${slugTitle}/${slugState}`);
+
+    const slugTitle = title.toLowerCase();
+    const slugState = state.toLowerCase();
+
+    try {
+      const response = await axios.get(
+        `/api/user/search_event/${slugTitle}/${slugState}`
+      );
+      // Assuming the response contains the list of events
+      const events = response.data.events;
+
+      // Pass events data to the search results page
+      navigate(`/search/${slugTitle}/${slugState}`, { state: { events } });
+    } catch (error) {
+      console.error("Error fetching search results:", error);
     }
+
     // Reset the search fields
     setTitle("");
     setinputState("");
@@ -139,7 +148,7 @@ const Nav = () => {
               </NavLink>
             </li>
           ))}
-          {!auth.user ? (
+          {!auth.userdata ? (
             <>
               <NavLink
                 to="/register"

@@ -18,7 +18,7 @@ const UserNav = () => {
   const imgRef = useRef();
   const navigate = useNavigate();
 
-  let Links = [{ name: "Home", link: "/user" }];
+  let Links = [{ name: "Home", link: "/user/home" }];
 
   window.addEventListener("click", (e) => {
     if (e.target !== menuRef.current && e.target !== imgRef.current) {
@@ -75,7 +75,8 @@ const UserNav = () => {
     setinputState("");
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const { res } = await axios.get(`/api/logout/${auth.userdata.email}`);
     setAuth({
       ...auth,
       user: null,
@@ -136,7 +137,7 @@ const UserNav = () => {
               </NavLink>
             </li>
           ))}
-          {!auth.user ? (
+          {!auth.userdata ? (
             <>
               <NavLink
                 to="/register"
@@ -168,14 +169,9 @@ const UserNav = () => {
                     className="absolute bg-gray-100 p-4 w-48 right-0.5 rounded"
                   >
                     <ul>
-                      <Link to="/">
+                      <Link to="/user/update-user">
                         <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
-                          Dashboard
-                        </li>
-                      </Link>
-                      <Link to="/org/create-form">
-                        <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
-                          Create New Event
+                          Profile Settings
                         </li>
                       </Link>
 

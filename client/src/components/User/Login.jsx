@@ -13,19 +13,30 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/login", {
+      const res = await axios.post("/api/login", {
         email,
         password,
+        organizer: false,
       });
-      if (res && res.data.success) {
+      if (res && res.data.success && !res.data.organizer) {
         alert(res.data.message);
         setAuth({
           ...auth,
-          user: res.data.user,
+          userdata: res.data.userdata,
           token: res.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(res.data));
-        navigate("/user");
+        // Check for redirectPath in localStorage
+        const redirectPath = localStorage.getItem("redirectPath");
+        if (redirectPath) {
+          // If redirectPath exists, navigate to it
+          navigate(redirectPath);
+          // Remove redirectPath from localStorage
+          localStorage.removeItem("redirectPath");
+        } else {
+          // If redirectPath does not exist, navigate to /user
+          navigate("/user");
+        }
       } else {
         alert(res.data.message);
       }

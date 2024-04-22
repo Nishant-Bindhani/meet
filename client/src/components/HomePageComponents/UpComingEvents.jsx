@@ -1,10 +1,49 @@
 import Card from "./Card.jsx";
-import jsondata from "./dummyevents.js";
+
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
+import React, { useEffect, useState } from "react";
 
 const UpComingEvents = () => {
   const [auth, setAuth] = useAuth();
+  const [address, setAddress] = useState(null);
+  const [error, setError] = useState(null);
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const pos = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+
+        const { latitude, longitude } = pos.coords;
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+        const response = await axios.get(url);
+        setAddress(response.data.address);
+        setinputState(response.data.address.state);
+        setError(null);
+      } catch (error) {
+        setAddress(null);
+        setError(error.message || "Error fetching address");
+      }
+    })();
+  }, [setAddress]);
+
+  useEffect(() => {
+    if (address && address.state) {
+      const fetchEvents = async () => {
+        try {
+          const { data } = await axios.get(`/api/home/${address.state}`);
+          setEvents(data.upcoming_events);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      fetchEvents();
+    }
+  }, [address]);
   return (
     <div className="mt-32 font-display">
       <div className="max-w-[1320px] mx-auto">
@@ -27,16 +66,22 @@ const UpComingEvents = () => {
         </div>
       </div>
       <div className="max-w-[1320px] mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-5 px-3 py-4">
-        {jsondata.map((e) => (
+        {events.map((e) => (
           <Link
             to={
-              auth.user
-                ? `/user/events/${encodeURIComponent(e.title)}`
-                : auth.user && auth.user.admin
-                ? `/org/events/${encodeURIComponent(e.title)}`
-                : `/events/${encodeURIComponent(e.title)}`
+              auth.userdata
+                ? `/user/events/${encodeURIComponent(e.title)}/${e.state}/${
+                    e.event_id
+                  }`
+                : auth.userdata && auth.userdata.organizer
+                ? `/org/events/${encodeURIComponent(e.title)}/${e.state}/${
+                    e.event_id
+                  }`
+                : `/events/${encodeURIComponent(e.title)}/${e.state}${
+                    e.event_id
+                  }`
             }
-            key={e.id}
+            key={e.event_id}
           >
             <Card
               img={e.img}
