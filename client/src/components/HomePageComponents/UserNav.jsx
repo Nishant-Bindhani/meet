@@ -140,7 +140,7 @@ const UserNav = () => {
           {!auth.userdata ? (
             <>
               <NavLink
-                to="/register"
+                to="/login"
                 className="py-2 pl-6 text-lg text-white hover:text-gray-400 duration-200"
               >
                 Log In

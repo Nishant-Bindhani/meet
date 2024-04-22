@@ -105,16 +105,16 @@ const OrgNav = () => {
               </NavLink>
             </li>
           ))}
-          {!auth.userdata ? (
+          {!auth.userdata.organizer ? (
             <>
               <NavLink
-                to="/register"
+                to="/org-login"
                 className="py-2 pl-6 text-lg text-white hover:text-gray-400 duration-200"
               >
                 Log In
               </NavLink>
               <NavLink
-                to="/register"
+                to="/org-register"
                 className="bg-red-500 text-white py-2 px-6 rounded-lg md:ml-8 hover:bg-red-800 duration-500"
               >
                 Sign Up
