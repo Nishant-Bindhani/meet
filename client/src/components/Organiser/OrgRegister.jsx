@@ -12,15 +12,16 @@ const OrgRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/register", {
+      const res = await axios.post("/api/signup", {
         name,
         email,
         password,
         state,
+        organizer: true,
       });
       if (res && res.data.success) {
         alert(res.data.message);
-        navigate("/org-login");
+        navigate("/org/home");
       } else {
         alert(res.data.message);
       }
@@ -123,16 +124,6 @@ const OrgRegister = () => {
                   setState(e.target.value);
                 }}
                 placeholder="Enter Your State"
-                className="w-full py-2 my-2 bg-transparent text-black border-b border-black outline-none focus:outline-none"
-                required
-              />
-              <input
-                type="text"
-                value={answer}
-                onChange={(e) => {
-                  setAnswer(e.target.value);
-                }}
-                placeholder="Enter your Security Answer"
                 className="w-full py-2 my-2 bg-transparent text-black border-b border-black outline-none focus:outline-none"
                 required
               />

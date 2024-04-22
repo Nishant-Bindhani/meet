@@ -6,7 +6,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [state, setState] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [location, setLocation] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -17,12 +17,12 @@ const Register = () => {
         email,
         password,
         state,
-        answer,
+        location,
         organizer: false,
       });
       if (res && res.data.success) {
         alert(res.data.message);
-        navigate("/login");
+        navigate("/user/home");
       } else {
         alert(res.data.message);
       }
@@ -131,9 +131,9 @@ const Register = () => {
               />
               <input
                 type="text"
-                value={answer}
+                value={location}
                 onChange={(e) => {
-                  setAnswer(e.target.value);
+                  setLocation(e.target.value);
                 }}
                 placeholder="Enter your Location"
                 className="w-full py-2 my-2 bg-transparent text-black border-b border-black outline-none focus:outline-none"
