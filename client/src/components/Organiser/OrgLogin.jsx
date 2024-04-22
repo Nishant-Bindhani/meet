@@ -19,7 +19,7 @@ const OrgLogin = () => {
         alert(res.data.message);
         setAuth({
           ...auth,
-          user: res.data.user,
+          userdata: res.data.userdata,
           token: res.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(res.data));
