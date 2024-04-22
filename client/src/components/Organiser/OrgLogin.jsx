@@ -13,6 +13,7 @@ const OrgLogin = () => {
       const res = await axios.post("/api/login", {
         email,
         password,
+        organizer: true,
       });
       if (res && res.data.success && res.data.organizer) {
         alert(res.data.message);
