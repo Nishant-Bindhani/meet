@@ -15,7 +15,7 @@ const OrgLogin = () => {
         password,
         organizer: true,
       });
-      if (res && res.data.success && res.data.organizer) {
+      if (res && res.data.success && res.data.userdata.organizer) {
         alert(res.data.message);
         setAuth({
           ...auth,
