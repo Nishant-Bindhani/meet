@@ -22,6 +22,7 @@ const UpdateOrg = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(state);
       const email = auth.userdata.email;
       const res = await axios.post(`/api/org/update_org/${email}`, {
         name,
@@ -29,8 +30,23 @@ const UpdateOrg = () => {
         state,
       });
       if (res && res.data.success) {
+        const currentAuth = JSON.parse(localStorage.getItem("auth"));
+
+        // Update auth data
+        const updatedAuth = {
+          ...currentAuth,
+          userdata: {
+            ...currentAuth.userdata,
+            name: name,
+            password: password,
+            state: state,
+          },
+        };
+
+        // Store updated auth data
+        localStorage.setItem("auth", JSON.stringify(updatedAuth));
         alert("Profile Updated Successfully");
-        navigate("/org");
+        navigate("/org/home");
       } else {
         alert("Failed to Update");
       }
@@ -46,7 +62,7 @@ const UpdateOrg = () => {
       if (!answer) return;
       const email = auth.userdata.email;
       const res = await axios.delete(`/api/org/delete_org/${email}`);
-      if (res && res.data.success) {
+      if (res) {
         alert("Account Deleted Successfully");
         navigate("/org-login");
       } else {

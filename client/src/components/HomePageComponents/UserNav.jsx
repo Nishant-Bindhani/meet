@@ -64,13 +64,21 @@ const UserNav = () => {
     setinputState(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // Create slugs for title and inputState
-    const slugTitle = slugify(title, { lower: true });
-    const slugState = slugify(inputState, { lower: true });
-    // Navigate to a different page with the slugs in the URL
-    navigate(`/user/events/${slugTitle}/${slugState}`);
+
+    const slugTitle = title.toLowerCase();
+    const slugState = state.toLowerCase();
+    // Create slugs for title and inputState
+    const response = await axios.get(
+      `/api/user/search_event/${slugTitle}/${slugState}`
+    );
+    // Assuming the response contains the list of events
+    const events = response.data.events;
+
+    // Pass events data to the search results page
+    navigate(`user/events/${slugTitle}/${slugState}`, { state: { events } });
     // Reset the search fields
     setTitle("");
     setinputState("");

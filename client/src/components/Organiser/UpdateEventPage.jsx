@@ -31,8 +31,8 @@ const UpdateEventPage = () => {
           const eventData = data.event;
           setName(eventData.name);
           setTitle(eventData.title);
-          setStartDate(new Date(eventData.startDate));
-          setEndDate(new Date(eventData.endDate));
+          setStartDate(new Date(eventData.start_date));
+          setEndDate(new Date(eventData.end_date));
           setState(eventData.state);
           setLocation(eventData.location);
           setPrice(eventData.price);
@@ -75,7 +75,11 @@ const UpdateEventPage = () => {
       const eventData = new FormData();
       eventData.append("name", name);
       eventData.append("title", title);
-      eventData.append("image", await convertBase64(image));
+      if (image === "") {
+        eventData.append("image", "");
+      } else {
+        eventData.append("image", await convertBase64(image));
+      }
       eventData.append("startDate", startDate);
       eventData.append("endDate", endDate);
       eventData.append("state", state);
@@ -84,13 +88,14 @@ const UpdateEventPage = () => {
       eventData.append("description", description);
 
       const { data } = await axios.post(
-        `/api/org/update_event/${eventId}`,
+        `/api/org/update_event/${id}`,
         eventData
       );
-      if (data?.status) {
+      if (data?.success) {
         navigate("/org/home");
         alert("Event Update Successfully");
       } else {
+        console.log(data?.success)
         console.log("Something wrong in Updation");
       }
     } catch (error) {

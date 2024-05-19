@@ -29,6 +29,21 @@ const UpdateUser = () => {
         state,
       });
       if (res && res.data.success) {
+        const currentAuth = JSON.parse(localStorage.getItem("auth"));
+
+        // Update auth data
+        const updatedAuth = {
+          ...currentAuth,
+          userdata: {
+            ...currentAuth.userdata,
+            name: name,
+            password: password,
+            state: state,
+          },
+        };
+
+        // Store updated auth data
+        localStorage.setItem("auth", JSON.stringify(updatedAuth));
         alert("Profile Updated Successfully");
         navigate("/user/home");
       } else {

@@ -19,6 +19,7 @@ import UpdateOrg from "./components/Organiser/UpdateOrg";
 import ShowEvent from "./components/Organiser/ShowEvent";
 import { PrivateRoute } from "./Routes/PrivateRoute";
 import { AdminRoute } from "./Routes/AdminRoute";
+import Dummy from "./Dummy";
 function App() {
   return (
     <div className="">
@@ -78,7 +79,7 @@ function App() {
           <Route path="/org/update-event/:id" element={<UpdateEventPage />} />
           <Route path="/org/show-event/:id" element={<ShowEvent />} /> */}
 
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="*" element={<Dummy />} />
         </Routes>
       </Router>
     </div>

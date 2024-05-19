@@ -4,7 +4,6 @@ import Footer from "../components/HomePageComponents/Footer.jsx";
 import Hero from "../components/HomePageComponents/Hero.jsx";
 
 import OrgNav from "../components/HomePageComponents/OrgNav.jsx";
-import UpComingEvents from "../components/HomePageComponents/UpComingEvents.jsx";
 import UserNav from "../components/HomePageComponents/UserNav.jsx";
 
 const UserHome = () => {
@@ -12,7 +11,6 @@ const UserHome = () => {
     <div>
       <UserNav />
       <Hero />
-      <UpComingEvents />
       <EventsNear />
       <AttendingEvents />
       <Footer />

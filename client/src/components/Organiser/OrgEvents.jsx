@@ -15,6 +15,7 @@ const OrgEvents = () => {
         const { data } = await axios.get(
           `/api/org/org_home/${auth.userdata.email}`
         );
+        console.log(data.events);
         setEvents(data.events);
       } catch (error) {
         console.error(error);
@@ -36,6 +37,8 @@ const OrgEvents = () => {
         // If the event is successfully deleted, remove it from the events list
         setEvents(events.filter((event) => event.id !== eventId));
       }
+      alert("deleted event successfully");
+      window.location.reload(); 
     } catch (error) {
       console.error(error);
     }
@@ -75,8 +78,8 @@ const OrgEvents = () => {
                 <Card
                   img={e.img}
                   title={e.title}
-                  host={e.host}
-                  time={e.time}
+                  host={e.name}
+                  time={e.start_date}
                   price={e.price}
                 />
               </Link>
