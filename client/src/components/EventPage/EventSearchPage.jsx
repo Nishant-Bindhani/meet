@@ -10,13 +10,16 @@ const EventSearchPage = () => {
   const { slugTitle, slugState } = useParams();
   const [auth, setAuth] = useAuth();
   const { state } = useLocation();
-  const [searchResults, setSearchResults] = useState(state?.events || []);
+  const [searchResults, setSearchResults] = useState([]);
   const [searchTitle, setSearchTitle] = useState("");
 
-  useEffect(() => {
-    setSearchResults(state?.events || []);
+  useEffect(async () => {
+    const { data } = await axios.get(
+      `/api/user/search_event/${slugTitle}/${slugState}`
+    );
+    setSearchResults(data.events || []);
     setSearchTitle(slugTitle); //
-  }, [state, slugTitle]);
+  }, [slugTitle]);
 
   return (
     <div className="font-display">

@@ -3,7 +3,7 @@ import EventsNear from "../components/HomePageComponents/EventsNear.jsx";
 import Footer from "../components/HomePageComponents/Footer.jsx";
 import Hero from "../components/HomePageComponents/Hero.jsx";
 
-import OrgNav from "../components/HomePageComponents/OrgNav.jsx";
+i;
 import UserNav from "../components/HomePageComponents/UserNav.jsx";
 
 const UserHome = () => {
