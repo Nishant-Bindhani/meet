@@ -5,11 +5,12 @@ import Hero from "../components/HomePageComponents/Hero.jsx";
 
 import OrgNav from "../components/HomePageComponents/OrgNav.jsx";
 import UpComingEvents from "../components/HomePageComponents/UpComingEvents.jsx";
+import UserNav from "../components/HomePageComponents/UserNav.jsx";
 
 const UserHome = () => {
   return (
     <div>
-      <OrgNav />
+      <UserNav />
       <Hero />
       <UpComingEvents />
       <EventsNear />

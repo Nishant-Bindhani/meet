@@ -63,45 +63,49 @@ const OrgEvents = () => {
         </div>
       </div>
       <div className="max-w-[1320px] mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-5 px-3 py-4">
-        {events.map((e) => (
-          <div
-            key={e.event_id}
-            className="relative"
-            onMouseEnter={() => setHoveredCard(e.event_id)}
-            onMouseLeave={() => setHoveredCard(null)}
-          >
-            <Link to={`/org/show-event/${e.event_id}`}>
-              <Card
-                img={e.img}
-                title={e.title}
-                host={e.host}
-                time={e.time}
-                price={e.price}
-              />
-            </Link>
-            {hoveredCard === e.event_id && (
-              <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-60 backdrop-blur-lg">
-                <button
-                  onClick={() => handleUpdateEvent(e.event_id)}
-                  className="bg-blue-500 text-white px-3 py-1 rounded mr-2"
-                >
-                  Update
-                </button>
-                <button
-                  onClick={() => handleDeleteEvent(e.event_id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded mr-2"
-                >
-                  Delete
-                </button>
-                <Link to={`/org/show-event/${e.event_id}`}>
-                  <button className="bg-green-500 text-white px-3 py-1 rounded">
-                    Show Event
+        {events && events.length > 0 ? (
+          events.map((e) => (
+            <div
+              key={e.event_id}
+              className="relative"
+              onMouseEnter={() => setHoveredCard(e.event_id)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              <Link to={`/org/show-event/${e.event_id}`}>
+                <Card
+                  img={e.img}
+                  title={e.title}
+                  host={e.host}
+                  time={e.time}
+                  price={e.price}
+                />
+              </Link>
+              {hoveredCard === e.event_id && (
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-60 backdrop-blur-lg">
+                  <button
+                    onClick={() => handleUpdateEvent(e.event_id)}
+                    className="bg-blue-500 text-white px-3 py-1 rounded mr-2"
+                  >
+                    Update
                   </button>
-                </Link>
-              </div>
-            )}
-          </div>
-        ))}
+                  <button
+                    onClick={() => handleDeleteEvent(e.event_id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded mr-2"
+                  >
+                    Delete
+                  </button>
+                  <Link to={`/org/show-event/${e.event_id}`}>
+                    <button className="bg-green-500 text-white px-3 py-1 rounded">
+                      Show Event
+                    </button>
+                  </Link>
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          <p>No events found</p>
+        )}
       </div>
     </div>
   );

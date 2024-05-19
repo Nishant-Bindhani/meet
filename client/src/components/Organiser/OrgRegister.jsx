@@ -21,7 +21,7 @@ const OrgRegister = () => {
       });
       if (res && res.data.success) {
         alert(res.data.message);
-        navigate("/org/home");
+        navigate("/org-login");
       } else {
         alert(res.data.message);
       }

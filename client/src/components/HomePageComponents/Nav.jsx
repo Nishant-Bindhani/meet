@@ -90,7 +90,7 @@ const Nav = () => {
   const handleLogout = () => {
     setAuth({
       ...auth,
-      user: null,
+      userdata: null,
       token: "",
     });
     localStorage.removeItem("auth"); // delete data
@@ -148,55 +148,21 @@ const Nav = () => {
               </NavLink>
             </li>
           ))}
-          {!auth.userdata ? (
-            <>
-              <NavLink
-                to="/login"
-                className="py-2 pl-6 text-lg text-white hover:text-gray-400 duration-200"
-              >
-                Log In
-              </NavLink>
-              <NavLink
-                to="/register"
-                className="bg-red-500 text-white py-2 px-6 rounded-lg md:ml-8 hover:bg-red-800 duration-500"
-              >
-                Sign Up
-              </NavLink>
-            </>
-          ) : (
-            <>
-              {" "}
-              <div className="pl-14">
-                <img
-                  ref={imgRef}
-                  onClick={() => setOpen(!open)}
-                  src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="user"
-                  className="h-14 w-14 object-cover border-4 border-gray-400 rounded-full cursor-pointer"
-                />
-                {open && (
-                  <div
-                    ref={menuRef}
-                    className="absolute bg-gray-100 p-4 w-48 right-0.5 rounded"
-                  >
-                    <ul>
-                      <Link to="/">
-                        <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
-                          Dashboard
-                        </li>
-                      </Link>
 
-                      <NavLink onClick={handleLogout} to="/login">
-                        <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
-                          LogOut
-                        </li>
-                      </NavLink>
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </>
-          )}
+          <>
+            <NavLink
+              to="/login"
+              className="py-2 pl-6 text-lg text-white hover:text-gray-400 duration-200"
+            >
+              Log In
+            </NavLink>
+            <NavLink
+              to="/register"
+              className="bg-red-500 text-white py-2 px-6 rounded-lg md:ml-8 hover:bg-red-800 duration-500"
+            >
+              Sign Up
+            </NavLink>
+          </>
         </ul>
       </div>
     </div>

@@ -85,32 +85,33 @@ const EventsNear = () => {
             </div>
           </div>
           <div className="max-w-[1320px] mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-5 px-3 py-4">
-            {events.map((e) => (
-              <Link
-                to={
-                  auth.userdata
-                    ? `/user/events/${encodeURIComponent(e.title)}/${e.state}/${
-                        e.event_id
-                      }`
-                    : auth.userdata && auth.userdata.organizer
-                    ? `/org/events/${encodeURIComponent(e.title)}/${e.state}/${
-                        e.event_id
-                      }`
-                    : `/events/${encodeURIComponent(e.title)}/${e.state}${
-                        e.event_id
-                      }`
-                }
-                key={e.event_id}
-              >
-                <Card
-                  img={e.img}
-                  title={e.title}
-                  host={e.host}
-                  time={e.time}
-                  price={e.price}
-                />
-              </Link>
-            ))}
+            {events &&
+              events.map((e) => (
+                <Link
+                  to={
+                    auth.userdata
+                      ? `/user/events/${encodeURIComponent(e.title)}/${
+                          e.state
+                        }/${e.event_id}`
+                      : auth.userdata && auth.userdata.organizer
+                      ? `/org/events/${encodeURIComponent(e.title)}/${
+                          e.state
+                        }/${e.event_id}`
+                      : `/events/${encodeURIComponent(e.title)}/${e.state}${
+                          e.event_id
+                        }`
+                  }
+                  key={e.event_id}
+                >
+                  <Card
+                    img={e.img}
+                    title={e.title}
+                    host={e.host}
+                    time={e.time}
+                    price={e.price}
+                  />
+                </Link>
+              ))}
           </div>
         </div>
       )}

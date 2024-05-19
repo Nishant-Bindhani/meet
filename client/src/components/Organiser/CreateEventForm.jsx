@@ -49,14 +49,15 @@ const CreateEventForm = () => {
       eventData.append("name", name);
       eventData.append("email", email);
       eventData.append("title", title);
-      eventData.append("image", await convertBase64(image));
+      eventData.append("img", await convertBase64(image));
+
       eventData.append("startDate", startDate);
       eventData.append("endDate", endDate);
       eventData.append("state", state);
       eventData.append("location", location);
       eventData.append("price", price);
       eventData.append("description", description);
-
+      console.log(eventData.get("image"));
       const { data } = await axios.post(
         `/api/org/create_event`, // Send event ID as a parameter
         eventData

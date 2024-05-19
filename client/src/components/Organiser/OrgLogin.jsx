@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/auth.jsx";
 const OrgLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const [auth, setAuth] = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Prevent the default form submission behavior

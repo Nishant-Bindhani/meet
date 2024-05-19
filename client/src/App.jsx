@@ -40,26 +40,27 @@ function App() {
               path="events/:title/:state/:id"
               element={<MainEventPage />}
             />
+            <Route path="events/:title/:state" element={<EventSearchPage />} />
             <Route path="pay/:title/:price/:id" element={<PaymentScreen />} />
             <Route
               path="search/:slugTitle/:slugState"
               element={<EventSearchPage />}
             />
           </Route>
-          {/* <Route path="/user/update-user" element={<UpdateUser />} /> */}
-          {/* <Route
+          <Route path="/user/update-user" element={<UpdateUser />} />
+          <Route
             path="/user/events/:title/:state/:id"
             element={<MainEventPage />}
-          /> */}
-          {/* <Route
+          />
+          <Route
             path="/user/pay/:title/:price/:id"
             element={<PaymentScreen />}
-          /> */}
+          />
 
-          {/* <Route
+          <Route
             path="/user/search/:slugTitle/:slugState"
             element={<EventSearchPage />}
-          /> */}
+          />
 
           <Route path="/org-login" element={<OrgLogin />} />
           <Route path="/org-register" element={<OrgRegister />} />

@@ -18,13 +18,17 @@ const Login = () => {
         password,
         organizer: false,
       });
-      if (res && res.data.success && !res.data.organizer) {
-        alert(res.data.message);
+      if (res && res?.data?.success && !res?.data?.userdata?.organizer) {
+        console.log(res?.data?.userdata?.organizer);
+        alert(res?.data?.message);
         setAuth({
           ...auth,
           userdata: res.data.userdata,
           token: res.data.token,
         });
+        console.log(res.data);
+        console.log(auth.userdata.name);
+
         localStorage.setItem("auth", JSON.stringify(res.data));
         // Check for redirectPath in localStorage
         const redirectPath = localStorage.getItem("redirectPath");

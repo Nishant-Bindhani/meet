@@ -39,6 +39,7 @@ const UserNav = () => {
         setAddress(response.data.address);
         setinputState(response.data.address.state);
         setError(null);
+        console.log(auth.userdata.name);
       } catch (error) {
         setAddress(null);
         setError(error.message || "Error fetching address");
@@ -175,7 +176,7 @@ const UserNav = () => {
                         </li>
                       </Link>
 
-                      <NavLink onClick={handleLogout} to="/org-login">
+                      <NavLink onClick={handleLogout} to="/login">
                         <li className="p-2 cursor-pointer rounded hover:bg-gray-200">
                           LogOut
                         </li>
