@@ -11,7 +11,7 @@ const AttendingEvents = () => {
     const fetchEvents = async () => {
       try {
         const { data } = await axios.get(
-          `/api/user/home/${auth.userdata.email}/${address.state}`
+          `/api/user/home/${auth.userdata.email}/${auth.userdata.state}`
         );
         setEvents(data.attending_events);
       } catch (error) {
@@ -31,7 +31,7 @@ const AttendingEvents = () => {
         alert("Event unattended successfully");
         // Refresh events list after unattending
         const { data } = await axios.get(
-          `/api/user/home/${auth.userdata.email}/${address.state}`
+          `/api/user/home/${auth.userdata.email}/${auth.userdata.state}`
         );
         setEvents(data.attending_events);
       }
